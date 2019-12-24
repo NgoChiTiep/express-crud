@@ -4,18 +4,12 @@ exports.register = function (req, res) {
     console.log(`req.body: ${req.body.email}`)
     UserModel.findOne({email: req.body.email}, (err, user) => {
         if(user == null){ //Kiểm tra xem email đã được sử dụng chưa
-            // bcrypt.hash(req.body.password, 10, function(err, hash){ //Mã hóa mật khẩu trước khi lưu vào db
-            //     if (err) {return next(err);}
-            //     const user = new User(req.body)
-            //     user.role = ['customer'] //sau khi register thì role auto là customer
-            //     user.password = hash;
-            //     user.password_confirm = hash;
-            //     user.save((err, result) => {
-            //         if(err) {return res.json({err})}
-            //         res.json({user: result})
-            //     })
-            // })
-            res.json({status: "Success", code: 200, user: req.body})
+            var userModel  = new UserModel(res.body) 
+            userModel.save((err, result)=>{
+                if(err) {return res.json({err})}
+                console.log(`result ${result}`)
+                res.json({status: "Success", code: 200, user: req.body})
+            })
         }else{
             res.json({err: 'Email has been used'})
         }
