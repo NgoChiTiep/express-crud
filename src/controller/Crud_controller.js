@@ -1,19 +1,42 @@
 const UserModel = require('../models/user_model')
 
 exports.register = function (req, res) {
-    console.log(`req.body: ${req.body.email}`)
+    console.log(`req.body: ${JSON.stringify(req.body)}`)
     UserModel.findOne({email: req.body.email}, (err, user) => {
         if(user == null){ //Kiểm tra xem email đã được sử dụng chưa
-            var userModel  = new UserModel(res.body) 
-            userModel.save((err, result)=>{
-                if(err) {return res.json({err})}
-                console.log(`result ${result}`)
-                res.json({status: "Success", code: 200, user: req.body})
+            const userModel  = new UserModel(req.body) 
+            userModel.save().then((result)=>{
+                console.log(`logEmail ${result}`)
+                res.json({status: "Success", code: 200, user: result})
+            })
+            .catch(err=>{
+                console.log(`errrrr: ${err}`)
+                return res.json({err})
             })
         }else{
+            console.log(`emailInvalid: ${err}`)
             res.json({err: 'Email has been used'})
         }
     })
-
 }
 
+
+exports.updateInfo = function (req, res) {
+    console.log(`req.body: ${JSON.stringify(req.body)}`)
+    UserModel.findOne({email: req.body.email}, (err, user) => {
+        if(user == null){ //Kiểm tra xem email đã được sử dụng chưa
+            const userModel  = new UserModel(req.body) 
+            userModel.save().then((result)=>{
+                console.log(`logEmail ${result}`)
+                res.json({status: "Success", code: 200, user: result})
+            })
+            .catch(err=>{
+                console.log(`errrrr: ${err}`)
+                return res.json({err})
+            })
+        }else{
+            console.log(`emailInvalid: ${err}`)
+            res.json({err: 'Email has been used'})
+        }
+    })
+}
