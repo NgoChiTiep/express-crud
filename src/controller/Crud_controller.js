@@ -21,6 +21,7 @@ exports.register = function (req, res) {
 }
 
 
+// demo fetch pull
 exports.updateInfo = function (req, res) {
     console.log(`req.body: ${JSON.stringify(req.body)}`)
     UserModel.findOne({email: req.body.email}, (err, user) => {
