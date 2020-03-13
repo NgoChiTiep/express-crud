@@ -10,4 +10,5 @@ var userSchema = new Schema({
 });
 
 // tạo Schema == table
+// demo
 module.exports = mongoose.model('User', userSchema);
